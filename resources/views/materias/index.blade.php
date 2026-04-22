@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="mb-5 flex items-center justify-between gap-3">
-    <h2 class="text-3xl font-bold">Lista de Alumnos</h2>
-    <a href="{{ route('alumnos.create') }}" class="btn btn-primary">Nuevo Alumno</a>
+    <h2 class="text-3xl font-bold">Lista de Materias</h2>
+    <a href="{{ route('materias.create') }}" class="btn btn-primary">Nueva Materia</a>
 </div>
 
 <div class="card bg-base-100 shadow-xl">
@@ -12,43 +12,31 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>NIE</th>
-                        <th>Nombre</th>
-                        <th>Edad</th>
-                        <th>Sexo</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Responsable</th>
-                        <th>Acciones</th>
+                        <th>Nombre de la materia</th>
+                        <th class="w-52">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($alumnos as $alumno)
+                    @forelse ($materias as $materia)
                     <tr>
-                        <td>{{ $alumno->nie }}</td>
-                        <td>{{ $alumno->nombres }} {{ $alumno->apellidos }}</td>
-                        <td>{{ $alumno->edad }}</td>
-                        <td>{{ $alumno->sexo }}</td>
-                        <td>{{ $alumno->telefono }}</td>
-                        <td>{{ $alumno->email }}</td>
-                        <td>{{ $alumno->responsable }}</td>
+                        <td>{{ $materia->nombre_materia }}</td>
                         <td class="space-x-2 whitespace-nowrap">
-                            <a href="{{ route('alumnos.edit', $alumno) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <button type="button" class="btn btn-error btn-sm" onclick="document.getElementById('delete_modal_{{ $alumno->id }}').showModal()">
+                            <a href="{{ route('materias.edit', $materia) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <button type="button" class="btn btn-error btn-sm" onclick="document.getElementById('delete_materia_{{ $materia->id }}').showModal()">
                                 Eliminar
                             </button>
 
-                            <dialog id="delete_modal_{{ $alumno->id }}" class="modal">
+                            <dialog id="delete_materia_{{ $materia->id }}" class="modal">
                                 <div class="modal-box">
                                     <h3 class="text-lg font-bold">Confirmar eliminación</h3>
                                     <p class="py-3">
-                                        ¿Seguro que quieres eliminar a <span class="font-semibold">{{ $alumno->nombres }} {{ $alumno->apellidos }}</span>?
+                                        ¿Seguro que quieres eliminar la materia <span class="font-semibold">{{ $materia->nombre_materia }}</span>?
                                     </p>
                                     <div class="modal-action">
                                         <form method="dialog">
                                             <button class="btn btn-ghost">Cancelar</button>
                                         </form>
-                                        <form action="{{ route('alumnos.destroy', $alumno) }}" method="POST">
+                                        <form action="{{ route('materias.destroy', $materia) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-error">Sí, eliminar</button>
@@ -63,7 +51,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="py-8 text-center text-base-content/70">No hay alumnos registrados.</td>
+                        <td colspan="2" class="py-8 text-center text-base-content/70">No hay materias registradas.</td>
                     </tr>
                     @endforelse
                 </tbody>
